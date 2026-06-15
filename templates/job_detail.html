@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Details</title>
+</head>
+<body>
+
+<h1>{{ job.title }} at {{ job.company }}</h1>
+
+<p><strong>Location:</strong> {{ job.location }}</p>
+<p><strong>Status:</strong> {{ job.status }}</p>
+<p><strong>Source:</strong> {{ job.source }}</p>
+<p><strong>URL:</strong>
+<a href="{{ job.job_url }}">{{ job.job_url }}</a>
+</p>
+<p><strong>Match Score:</strong> {{ job.score }}</p>
+<p><strong>Date Found:</strong> {{ job.date_found }}</p>
+
+<a href="/">Back to Dashboard</a>
+
+</body>
+</html>

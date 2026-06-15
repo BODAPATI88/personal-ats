@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import sqlite3
+from db_utils import fetch_one, fetch_all, execute_query
 
 app = Flask(__name__)
 
@@ -51,6 +52,31 @@ def home():
         offer_jobs=offer_jobs,
         search=search
     )
+
+@app.route("/add_job", methods=["GET","POST"])
+def add_job():
+
+    if request.method == "POST":
+        title = request.form["title"]
+        company = request.form["company"]
+        location = request.form["location"]
+
+        conn = sqlite3.connect("database/ats.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO jobs (title, company, location) VALUES (?, ?, ?)", (title, company, location))
+        conn.commit()
+        conn.close()
+
+        return redirect("/")
+
+    return render_template("add_job.html")
+
+@app.route("/job/<int:job_id>")
+def job_detail(job_id):
+    job = fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
+    if job is None:
+        return "Job not found", 404
+    return render_template("job_detail.html", job=job)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
