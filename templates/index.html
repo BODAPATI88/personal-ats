@@ -16,6 +16,27 @@
     <li>Offers: {{ offer_jobs }}</li>
 </ul>
 
+<form method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search jobs..."
+        value="{{ search }}"
+    >
+
+    <select name="status">
+        <option value="">All</option>
+        <option value="NEW">NEW</option>
+        <option value="APPLIED">APPLIED</option>
+        <option value="OFFER">OFFER</option>
+        <option value="REJECTED">REJECTED</option>
+    </select>
+
+    <button type="submit">Search</button>
+
+</form>
+
 <h2>Jobs</h2>
 
 <table border="1">
