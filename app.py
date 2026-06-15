@@ -96,5 +96,11 @@ def edit_job(job_id):
 
     return render_template("edit_job.html", job=job)
 
+@app.route("/update_status/<int:job_id>", methods=["POST"])
+def update_status(job_id):
+    new_status = request.form["status"]
+    execute_query("UPDATE jobs SET status = ? WHERE id = ?", (new_status, job_id))
+    return redirect(f"/job/{job_id}")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

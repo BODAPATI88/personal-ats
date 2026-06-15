@@ -18,6 +18,20 @@
 
 <br><br>
 <a href="/edit/{{ job.id }}">Edit Job</a><br><br>
+<form method="post" action="/update_status/{{ job.id }}">
+<label>Change Status:</label><br>
+<select name="status">
+<option value="NEW">NEW</option>
+<option value="APPLIED">APPLIED</option>
+<option value="HR_ROUND">HR_ROUND</option>
+<option value="TECHNICAL">TECHNICAL</option>
+<option value="FINAL">FINAL</option>
+<option value="OFFER">OFFER</option>
+<option value="REJECTED">REJECTED</option>
+</select>
+<button type="submit">Update Status</button>
+</form><br>
+
 <a href="/">Back to Dashboard</a>
 
 </body>
