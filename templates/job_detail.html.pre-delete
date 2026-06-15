@@ -32,10 +32,6 @@
 <button type="submit">Update Status</button>
 </form><br>
 
-<form method="post" action="/delete/{{ job.id }}" onsubmit="return confirm('Are you sure you want to delete this job?' );">
-<button type="submit" style="color:red;">Delete Job</button>
-</form><br>
-
 <a href="/">Back to Dashboard</a>
 
 </body>
