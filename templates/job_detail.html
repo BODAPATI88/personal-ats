@@ -11,7 +11,11 @@
 <p><strong>Status:</strong> {{ job.status }}</p>
 <p><strong>Source:</strong> {{ job.source }}</p>
 <p><strong>URL:</strong>
+{% if job.job_url %}
 <a href="{{ job.job_url }}">{{ job.job_url }}</a>
+{% else %}
+N/A
+{% endif %}
 </p>
 <p><strong>Match Score:</strong> {{ job.score }}</p>
 <p><strong>Date Found:</strong> {{ job.date_found }}</p>
