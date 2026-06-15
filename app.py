@@ -14,14 +14,35 @@ def home():
     FROM jobs
     ORDER BY id DESC
     """)
-
     jobs = cursor.fetchall()
+
+    cursor.execute("SELECT COUNT(*) FROM jobs")
+    total_jobs = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM jobs WHERE UPPER(status)='APPLIED'"
+    )
+    applied_jobs = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM jobs WHERE UPPER(status)='NEW'"
+    )
+    new_jobs = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM jobs WHERE UPPER(status)='OFFER'"
+    )
+    offer_jobs = cursor.fetchone()[0]
 
     conn.close()
 
     return render_template(
         "index.html",
-        jobs=jobs
+        jobs=jobs,
+        total_jobs=total_jobs,
+        applied_jobs=applied_jobs,
+        new_jobs=new_jobs,
+        offer_jobs=offer_jobs
     )
 
 if __name__ == "__main__":
