@@ -1,0 +1,12 @@
+Senior Platform Engineer
+
+Required Skills:
+Azure
+Terraform
+Kubernetes
+Linux
+Docker
+Git
+CI/CD
+Monitoring
+Python

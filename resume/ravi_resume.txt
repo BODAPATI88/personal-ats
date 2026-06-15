@@ -1,0 +1,14 @@
+Windows Administration
+Azure
+VMware
+PowerShell
+Active Directory
+Office 365
+Linux
+Docker
+Kubernetes
+Terraform
+Git
+Cloud Infrastructure
+Monitoring
+Automation
