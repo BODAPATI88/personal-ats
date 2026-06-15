@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personal ATS</title>
+</head>
+<body>
+
+<h1>Personal ATS</h1>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Title</th>
+<th>Company</th>
+<th>Location</th>
+<th>Status</th>
+</tr>
+
+{% for job in jobs %}
+<tr>
+<td>{{ job[0] }}</td>
+<td>{{ job[1] }}</td>
+<td>{{ job[2] }}</td>
+<td>{{ job[3] }}</td>
+<td>{{ job[4] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>
