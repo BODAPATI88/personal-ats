@@ -78,5 +78,23 @@ def job_detail(job_id):
         return "Job not found", 404
     return render_template("job_detail.html", job=job)
 
+
+@app.route("/edit/<int:job_id>", methods=["GET","POST"])
+def edit_job(job_id):
+    if request.method == "POST":
+        title = request.form["title"]
+        company = request.form["company"]
+        location = request.form["location"]
+        status = request.form["status"]
+        execute_query("UPDATE jobs SET title=?, company=?, location=?, status=? WHERE id=?", (title, company, location, status, job_id))
+        return redirect(f"/job/{job_id}")
+
+    job = fetch_one("SELECT * FROM jobs WHERE id = ?", (job_id,))
+
+    if job is None:
+        return "Job not found", 404
+
+    return render_template("edit_job.html", job=job)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

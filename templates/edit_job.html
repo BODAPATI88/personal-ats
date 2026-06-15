@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job</title>
+</head>
+<body>
+
+<h1>Edit Job</h1>
+
+<form method="post">
+
+<label>Title:</label><br>
+<input type="text" name="title" value="{{ job.title }}" required><br><br>
+
+<label>Company:</label><br>
+<input type="text" name="company" value="{{ job.company }}" required><br><br>
+
+<label>Location:</label><br>
+<input type="text" name="location" value="{{ job.location }}"><br><br>
+
+<label>Status:</label><br>
+
+<select name="status">
+    <option value="NEW" {% if job.status == 'NEW' %}selected{% endif %}>NEW</option>
+    <option value="APPLIED" {% if job.status == 'APPLIED' %}selected{% endif %}>APPLIED</option>
+    <option value="HR_ROUND" {% if job.status == 'HR_ROUND' %}selected{% endif %}>HR_ROUND</option>
+    <option value="TECHNICAL" {% if job.status == 'TECHNICAL' %}selected{% endif %}>TECHNICAL</option>
+    <option value="FINAL" {% if job.status == 'FINAL' %}selected{% endif %}>FINAL</option>
+    <option value="OFFER" {% if job.status == 'OFFER' %}selected{% endif %}>OFFER</option>
+    <option value="REJECTED" {% if job.status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+</select>
+
+<br><br>
+
+<button type="submit">Save Changes</button>
+
+</form>
+
+<br>
+
+<a href="/job/{{ job.id }}">Cancel</a>
+
+</body>
+</html>
