@@ -4,3 +4,4 @@ __pycache__/
 database/*.db
 exports/*.csv
 *.bak
+*.pre-*
