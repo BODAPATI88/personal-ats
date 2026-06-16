@@ -67,7 +67,7 @@ for job in jobs:
             job.get("location"),
             job.get("source"),
             job.get("job_url"),
-            job.get("score", 0),
+            0,
             job.get("status", "NEW")
         )
     )
