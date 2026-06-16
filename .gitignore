@@ -8,3 +8,6 @@ exports/*.csv
 reports/
 config/
 imports/jobs/jobs_*.json
+
+.venv/
+database/
