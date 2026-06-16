@@ -15,6 +15,17 @@ skipped = 0
 
 for job in jobs:
     job_url = job.get("job_url")
+    company = job.get("company")
+
+    existing_company = fetch_one(
+        "SELECT id FROM jobs WHERE UPPER(company)=UPPER(?) AND UPPER(status)='APPLIED'",
+        (company,)
+    )
+
+    if existing_company:
+        skipped += 1
+        continue
+
 
     existing = fetch_one(
         "SELECT id FROM jobs WHERE job_url = ?",
