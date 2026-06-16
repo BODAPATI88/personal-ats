@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect
-import sqlite3
 from db_utils import fetch_one, fetch_all, execute_query
 
 app = Flask(__name__)
@@ -60,12 +59,7 @@ def add_job():
         title = request.form["title"]
         company = request.form["company"]
         location = request.form["location"]
-
-        conn = sqlite3.connect("database/ats.db")
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO jobs (title, company, location) VALUES (?, ?, ?)", (title, company, location))
-        conn.commit()
-        conn.close()
+        execute_query("INSERT INTO jobs (title, company, location) VALUES (?, ?, ?)", (title, company, location))
 
         return redirect("/")
 
@@ -108,4 +102,4 @@ def delete_job(job_id):
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
