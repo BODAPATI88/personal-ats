@@ -6,7 +6,11 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from db_utils import execute_query, fetch_one
 
-json_file = Path("imports/jobs/sample_jobs.json")
+json_file = Path(
+    sys.argv[1]
+    if len(sys.argv) > 1
+    else "imports/jobs/sample_jobs.json"
+)
 
 jobs = json.loads(json_file.read_text())
 
@@ -28,9 +32,24 @@ for job in jobs:
 
 
     existing = fetch_one(
-        "SELECT id FROM jobs WHERE job_url = ?",
-        (job_url,)
+    """
+    SELECT id
+    FROM jobs
+    WHERE (
+        job_url = ?
+        AND job_url IS NOT NULL
     )
+    OR (
+        UPPER(company)=UPPER(?)
+        AND UPPER(title)=UPPER(?)
+    )
+    """,
+    (
+        job_url,
+        company,
+        job.get("title")
+    )
+)
 
     if existing:
         skipped += 1
