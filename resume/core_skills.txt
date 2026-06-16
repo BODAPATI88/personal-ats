@@ -1,0 +1,20 @@
+azure
+terraform
+kubernetes
+aks
+linux
+docker
+helm
+git
+github actions
+azure devops
+jenkins
+python
+bash
+ansible
+prometheus
+grafana
+site reliability
+sre
+platform engineering
+cloud infrastructure
