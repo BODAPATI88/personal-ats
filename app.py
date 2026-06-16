@@ -17,13 +17,13 @@ def home():
         SELECT id,title,company,location,status
         FROM jobs
         WHERE title LIKE ? OR company LIKE ?
-        ORDER BY id DESC
+        ORDER BY score DESC, id DESC
         """, (f"%{search}%", f"%{search}%"))
     else:
         cursor.execute("""
         SELECT id,title,company,location,status
         FROM jobs
-        ORDER BY id DESC
+        ORDER BY score DESC, id DESC
         """)
 
     jobs = cursor.fetchall()
