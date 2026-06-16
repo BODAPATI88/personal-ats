@@ -5,3 +5,6 @@ database/*.db
 exports/*.csv
 *.bak
 *.pre-*
+reports/
+config/
+imports/jobs/jobs_*.json
