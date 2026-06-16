@@ -1,20 +1,352 @@
 [
   {
-    "title": "Azure DevOps Engineer",
-    "company": "Contoso",
-    "location": "Remote",
-    "source": "LinkedIn",
-    "job_url": "https://example.com/job1",
-    "score": 85,
-    "status": "NEW"
+    "company": "American Express",
+   "title": "Senior Kubernetes Platform Engineer / Technical Lead",
+    "location": "Palo Alto, CA (Hybrid)",
+    "primary_skills": ["Kubernetes", "Cluster API", "Terraform", "Golang"],
+    "application_url": "https://careers.americanexpress.com/en/sites/CX_1/job/26009220"
   },
   {
-    "title": "Platform Engineer",
-    "company": "Fabrikam",
-    "location": "Bengaluru",
-    "source": "Naukri",
-    "job_url": "https://example.com/job2",
-    "score": 78,
-    "status": "NEW"
+    "company": "Zensar Technologies",
+   "title": "Cloud IaaS-Migration and Engineering-Azure",
+    "location": "Pune, India (Work from Anywhere)",
+    "primary_skills": ["Azure", "Terraform", "Linux", "Workload Migration"],
+    "application_url": "https://fa-etvl-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/146988"
+  },
+  {
+    "company": "McKesson",
+   "title": "Network Systems Administrator (Azure)",
+    "location": "Irving, TX",
+    "primary_skills": ["Azure", "Linux VMs", "Networking", "PowerShell"],
+    "application_url": "https://careers.mckesson.com/en/job/irving/network-systems-administrator-azure/733/92019644464"
+  },
+  {
+    "company": "Fidelity Investments",
+   "title": "Senior Site Reliability Engineer",
+    "location": "Durham, NC",
+    "primary_skills": ["Kubernetes", "Terraform", "AWS", "Python", "Observability"],
+    "application_url": "https://jobs.fidelity.com/en/jobs/2129812/senior-site-reliability-engineer/"
+  },
+  {
+    "company": "Microsoft",
+   "title": "Azure Kubernetes Service (AKS) Platform Engineer",
+    "location": "Redmond, WA",
+    "primary_skills": ["Azure", "Kubernetes", "Docker", "Linux"],
+    "application_url": "https://careers.microsoft.com/v2/global/en/jobs"
+  },
+  {
+    "company": "PepsiCo",
+   "title": "Sr. Engineer - Cloud Automation",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure", "AWS", "DevOps", "Automation"],
+    "application_url": "https://www.pepsicojobs.com"
+  },
+  {
+    "company": "Macquarie Group",
+   "title": "Manager | Site Reliability Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Kubernetes", "Linux internals", "Python", "AWS/GCP"],
+    "application_url": "https://www.careers.macquarie.com"
+  },
+  {
+    "company": "Wells Fargo",
+   "title": "Cloud Infrastructure Engineer",
+    "location": "Serilingampalle, India",
+    "primary_skills": ["Docker", "Podman", "Kubernetes", "OpenShift"],
+    "application_url": "https://www.wellsfargojobs.com"
+  },
+  {
+    "company": "State Street",
+   "title": "Azure - Cloud Platform Engineer, Officer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure", "Cloud Governance", "Platform Operations"],
+    "application_url": "https://statestreet.wd1.myworkdayjobs.com/GlobalCareers"
+  },
+  {
+    "company": "Vertafore",
+   "title": "Senior Site Reliability Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["AWS", "Kubernetes", "Linux", "CI/CD"],
+    "application_url": "https://www.vertafore.com/about/careers"
+  },
+  {
+    "company": "InvoiceCloud, Inc.",
+   "title": "Product Site Reliability Engineer",
+    "location": "Remote, India",
+    "primary_skills": ["Azure", "Kubernetes", "DevOps", ".NET"],
+    "application_url": "https://www.invoicecloud.com/about/careers"
+  },
+  {
+    "company": "Zscaler",
+   "title": "Architect, Site Reliability Engineer (Platform & Tooling)",
+    "location": "Hyderabad, India",
+    "primary_skills": ["DevOps", "Infrastructure Automation", "System Engineering"],
+    "application_url": "https://www.zscaler.com/careers"
+  },
+  {
+    "company": "Harman International",
+   "title": "Senior Site Reliability Engineer, SaaS Cloud Products",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Cloud Platforms", "Observability Tools", "Containerization"],
+    "application_url": "https://jobs.harman.com"
+  },
+  {
+    "company": "Hitachi Vantara",
+   "title": "Senior Site Reliability Engineer / Senior DevOps Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["AWS", "Python", "Bash", "CI/CD"],
+    "application_url": "https://careers.hitachivantara.com"
+  },
+  {
+    "company": "BairesDev",
+   "title": "DevOps Engineer - Remote Work",
+    "location": "Remote, India",
+    "primary_skills": ["Cloud Technologies", "Automation Tools", "CI/CD"],
+    "application_url": "https://jobs.bairesdev.com"
+  },
+  {
+    "company": "Opsera",
+   "title": "DevOps Evangelist / Infrastructure Engineer",
+    "location": "Remote",
+    "primary_skills": ["DevOps Toolchains", "CI/CD Platforms", "Troubleshooting"],
+    "application_url": "https://www.opsera.com/careers"
+  },
+  {
+    "company": "Experian",
+   "title": "Cloud Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["AWS", "S3", "Lambda", "IAM"],
+    "application_url": "https://www.experian.com/careers"
+  },
+  {
+    "company": "ProArch",
+   "title": "L3 - Cloud & Infra Support Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Windows Server", "Cloud Infrastructure", "Migration Support"],
+    "application_url": "https://www.proarch.com/careers"
+  },
+  {
+    "company": "Luxoft",
+   "title": "Cloud Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["PowerShell", "Bash", "Python", "Azure/AWS Devops"],
+    "application_url": "https://www.luxoft.com/careers"
+  },
+  {
+    "company": "Adobe",
+   "title": "Software Development Engineer 4 (DevOps/Platform)",
+    "location": "Noida, India",
+    "primary_skills": ["Cloud Architecture", "Platform Engineering", "Scalability"],
+    "application_url": "https://adobe.wd5.myworkdayjobs.com/externalcareers"
+  },
+  {
+    "company": "Accenture",
+   "title": "Technology Support Engineer (Cloud Infrastructure)",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Cloud Operations", "Infrastructure Management", "Troubleshooting"],
+    "application_url": "https://www.accenture.com/careers"
+  },
+  {
+    "company": "Siemens",
+   "title": "Senior Software Engineer - Cloud DevOps",
+    "location": "Pune, India",
+    "primary_skills": ["Cloud Infrastructure", "CI/CD Pipelines", "Automation"],
+    "application_url": "https://jobs.siemens.com"
+  },
+  {
+    "company": "PwC India",
+   "title": "Associate - Cloud Infrastructure & Quality Assurance",
+    "location": "Pune, India",
+    "primary_skills": ["Cloud Deployment", "Infrastructure Testing", "DevOps Concepts"],
+    "application_url": "https://www.pwc.in/careers"
+  },
+  {
+    "company": "NTT Data",
+   "title": "Enterprise Resource Planning Advisor (Cloud)",
+    "location": "Bengaluru, India",
+    "primary_skills": ["Cloud Platform Operations", "Enterprise Architecture"],
+    "application_url": "https://careers.nttdata.com"
+  },
+  {
+    "company": "Cognizant",
+   "title": "AI & Cloud Infrastructure Architect",
+    "location": "Chennai, India",
+    "primary_skills": ["Cloud Infrastructure Architecture", "AI Workload Deployment"],
+    "application_url": "https://careers.cognizant.com"
+  },
+  {
+    "company": "Robert Bosch",
+   "title": "Senior Azure DevOps Consultant",
+    "location": "Remote, India",
+    "primary_skills": ["Azure DevOps", "CI/CD Automation", "Infrastructure as Code"],
+    "application_url": "https://careers.smartrecruiters.com/BoschGroup"
+  },
+  {
+    "company": "LTIMindtree",
+   "title": "Senior DevOps Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure Cloud", "CI/CD Pipelines", "Terraform"],
+    "application_url": "https://www.ltimindtree.com/careers"
+  },
+  {
+    "company": "ValueLabs",
+   "title": "Senior Technology Engineer - Cloud DevOps Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Cloud Operations", "DevOps Automation", "Scripting"],
+    "application_url": "https://www.valuelabs.com/careers"
+  },
+  {
+    "company": "Infogain",
+   "title": "DevOps Engineer (Senior)",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Infrastructure as Code", "CI/CD", "Cloud Platforms"],
+    "application_url": "https://www.infogain.com/careers"
+  },
+  {
+    "company": "Synechron",
+   "title": "Cloud Application & Infrastructure Developer",
+    "location": "Pune, India",
+    "primary_skills": ["Azure Cloud", "Enterprise Application Scaling", "DevOps"],
+    "application_url": "https://www.synechron.com/careers"
+  },
+  {
+    "company": "KPMG India",
+   "title": "Senior Consultant - Azure Cloud Infrastructure",
+    "location": "Bengaluru, India",
+    "primary_skills": ["Azure Platform Engineering", "Infrastructure Architecture"],
+    "application_url": "https://careers.kpmg.com"
+  },
+  {
+    "company": "Virtusa",
+   "title": "Cloud Architect (ATC Infrastructure)",
+    "location": "Chennai, India",
+    "primary_skills": ["Cloud Operations", "Platform Architecture", "Automation"],
+    "application_url": "https://www.virtusa.com/careers"
+  },
+  {
+    "company": "Capgemini",
+   "title": "Azure Kubernetes Platform Engineer",
+    "location": "Bangalore, India",
+    "primary_skills": ["Azure", "Kubernetes", "Docker", "Terraform"],
+    "application_url": "https://www.capgemini.com/careers"
+  },
+  {
+    "company": "HCLTech",
+   "title": "Cloud Platform Infrastructure Engineer",
+    "location": "Noida, India",
+    "primary_skills": ["Linux", "Terraform", "Kubernetes", "Cloud Operations"],
+    "application_url": "https://www.hcltech.com/careers"
+  },
+  {
+    "company": "Infosys",
+   "title": "Technology Architect - Azure DevOps & Platform Engineering",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure DevOps", "Kubernetes", "Terraform", "Linux"],
+    "application_url": "https://career.infosys.com"
+  },
+  {
+    "company": "Wipro",
+   "title": "Azure DevOps Cloud Specialist",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure DevOps", "CI/CD", "Infrastructure as Code"],
+    "application_url": "https://careers.wipro.com"
+  },
+  {
+    "company": "Tata Consultancy Services",
+   "title": "Site Reliability Engineer (SRE) - Azure/Linux",
+    "location": "Mumbai, India",
+    "primary_skills": ["Linux", "Azure", "Observability Stacks", "Python"],
+    "application_url": "https://www.tcs.com/careers"
+  },
+  {
+    "company": "Tech Mahindra",
+   "title": "Kubernetes & Cloud Infrastructure Engineer",
+    "location": "Pune, India",
+    "primary_skills": ["Kubernetes", "Docker", "Terraform", "Linux"],
+    "application_url": "https://careers.techmahindra.com"
+  },
+  {
+    "company": "IBM India",
+   "title": "Cloud Platform Engineer - Infrastructure as Code",
+    "location": "Bangalore, India",
+    "primary_skills": ["Terraform", "Kubernetes", "Docker", "Linux System Admin"],
+    "application_url": "https://www.ibm.com/employment"
+  },
+  {
+    "company": "Oracle India",
+   "title": "Principal Site Reliability Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Linux internals", "Kubernetes", "Python/Bash Automation"],
+    "application_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1"
+  },
+  {
+    "company": "Dell Technologies",
+   "title": "Senior Platform Engineer - Cloud Native Infrastructure",
+    "location": "Bangalore, India",
+    "primary_skills": ["Kubernetes", "Docker", "Terraform", "Linux Administration"],
+    "application_url": "https://jobs.dell.com"
+  },
+  {
+    "company": "Cisco Systems",
+   "title": "Site Reliability Engineer - Cloud Platforms",
+    "location": "Bangalore, India",
+    "primary_skills": ["Kubernetes", "Terraform", "AWS/Azure", "Python"],
+    "application_url": "https://jobs.cisco.com"
+  },
+  {
+    "company": "Intel Corporation",
+   "title": "Cloud Software Platform Engineer",
+    "location": "Bangalore, India",
+    "primary_skills": ["Linux kernel", "Docker", "Kubernetes orchestration", "Go"],
+    "application_url": "https://jobs.intel.com"
+  },
+  {
+    "company": "Amazon Web Services (AWS)",
+   "title": "Cloud Infrastructure Architect / Platform Engineer",
+    "location": "Delhi, India",
+    "primary_skills": ["Kubernetes", "Terraform", "Linux Administration", "Docker"],
+    "application_url": "https://www.amazon.jobs"
+  },
+  {
+    "company": "Deloitte India",
+   "title": "Manager - Azure Cloud & Platform Engineering",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Azure DevOps", "Kubernetes", "Terraform Module Design"],
+    "application_url": "https://jobsindia.deloitte.com"
+  },
+  {
+    "company": "EY India",
+   "title": "Senior Cloud Engineer - Infrastructure Automation",
+    "location": "Chennai, India",
+    "primary_skills": ["Azure Platform", "Terraform", "CI/CD Pipelines"],
+    "application_url": "https://www.ey.com/en_in/careers"
+  },
+  {
+    "company": "PwC US Advisory",
+   "title": "Cloud Engineering & Platform Senior Associate",
+    "location": "Remote, US",
+    "primary_skills": ["Azure/AWS", "Kubernetes", "Terraform IaC", "Linux"],
+    "application_url": "https://www.pwc.com/us/en/careers"
+  },
+  {
+    "company": "Walmart Global Tech",
+   "title": "Senior Infrastructure Engineer - Container Platforms",
+    "location": "Bangalore, India",
+    "primary_skills": ["Kubernetes", "Docker", "Linux Performance Tuning", "Azure"],
+    "application_url": "https://careers.walmart.com"
+  },
+  {
+    "company": "Salesforce",
+   "title": "Infrastructure Engineer / Site Reliability Engineer",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Kubernetes", "Linux systems", "Terraform", "Golang/Python"],
+    "application_url": "https://careers.salesforce.com"
+  },
+  {
+    "company": "ServiceNow",
+   "title": "Staff Platform Engineer - Cloud Infrastructure",
+    "location": "Hyderabad, India",
+    "primary_skills": ["Kubernetes", "Linux Internals", "Docker Architecture", "CI/CD"],
+    "application_url": "https://careers.servicenow.com"
   }
 ]
