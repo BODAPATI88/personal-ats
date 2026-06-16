@@ -6,6 +6,7 @@ exports/*.csv
 *.bak
 *.pre-*
 reports/
+logs/
 config/
 imports/jobs/jobs_*.json
 

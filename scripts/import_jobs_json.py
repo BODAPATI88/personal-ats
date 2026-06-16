@@ -55,11 +55,14 @@ for job in jobs:
         skipped += 1
         continue
 
+    skills = job.get("primary_skills") or job.get("skills") or []
+    skills_value = ", ".join(skills) if isinstance(skills, list) else str(skills)
+
     execute_query(
         """
         INSERT INTO jobs
-        (title, company, location, source, job_url, score, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (title, company, location, source, job_url, score, status, skills)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             job.get("title"),
@@ -68,7 +71,8 @@ for job in jobs:
             job.get("source"),
             job.get("job_url"),
             0,
-            job.get("status", "NEW")
+            job.get("status", "NEW"),
+            skills_value
         )
     )
 

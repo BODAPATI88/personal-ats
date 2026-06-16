@@ -1,41 +1,51 @@
 import sqlite3
+import sys
+from pathlib import Path
 
-KEYWORDS = {
-    "kubernetes": 25,
-    "azure": 20,
-    "terraform": 15,
-    "devops": 15,
-    "platform": 10,
-    "site reliability": 10,
-    "sre": 10,
-    "cloud": 5,
-    "linux": 5,
-}
+sys.path.append(str(Path(__file__).resolve().parent))
 
-conn = sqlite3.connect("database/ats.db")
-cursor = conn.cursor()
+from skill_utils import load_resume_skills, parse_job_skills, weighted_match
 
-cursor.execute("""
-SELECT id, title
-FROM jobs
-""")
+DB_PATH = "database/ats.db"
 
-for job_id, title in cursor.fetchall():
-    title_lower = title.lower()
-    score = 0
 
-    for keyword, weight in KEYWORDS.items():
-        if keyword in title_lower:
-            score += weight
+def main():
+    resume_skills = load_resume_skills()
+    if not resume_skills:
+        print("Warning: no resume skills loaded from resume/ravi_resume.txt - all scores will be 0.")
 
-    score = min(score, 100)
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
 
-    cursor.execute(
-        "UPDATE jobs SET score=? WHERE id=?",
-        (score, job_id)
-    )
+    try:
+        cursor.execute("SELECT id, title, skills FROM jobs")
+        rows = cursor.fetchall()
+    except sqlite3.OperationalError as e:
+        if "no such column: skills" in str(e):
+            conn.close()
+            print(
+                "Error: jobs table is missing the 'skills' column.\n"
+                "Run `python3 scripts/migrate_db.py` once, then re-run scoring."
+            )
+            sys.exit(1)
+        raise
 
-conn.commit()
-conn.close()
+    updated = 0
+    for job_id, title, skills_field in rows:
+        job_skills = parse_job_skills(skills_field, title)
+        score, _matched, _missing = weighted_match(job_skills, resume_skills)
 
-print("Job scoring completed.")
+        cursor.execute(
+            "UPDATE jobs SET score=? WHERE id=?",
+            (score, job_id)
+        )
+        updated += 1
+
+    conn.commit()
+    conn.close()
+
+    print(f"Job scoring completed. {updated} jobs scored (resume-aware).")
+
+
+if __name__ == "__main__":
+    main()
