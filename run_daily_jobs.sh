@@ -8,5 +8,6 @@ if [ -f "$FILE" ]; then
 fi
 
 python3 scripts/score_jobs.py
+python3 scripts/skills_gap_report.py
 python3 scripts/recommend_jobs.py
 python3 scripts/generate_apply_queue.py

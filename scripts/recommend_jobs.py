@@ -1,23 +1,35 @@
 import sqlite3
 from pathlib import Path
 
-conn = sqlite3.connect("database/ats.db")
+DB_PATH = "database/ats.db"
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 cursor.execute("""
 SELECT id, company, title, score
 FROM jobs
 WHERE status='NEW'
-ORDER BY score DESC, id DESC
-LIMIT 50
+ORDER BY company, score DESC, id DESC
 """)
 
 rows = cursor.fetchall()
+conn.close()
 
 Path("reports").mkdir(exist_ok=True)
 
+# Rows are ordered by company then score DESC, so the first row seen for
+# each company is already that company's best-scoring NEW job.
+best_per_company = {}
+for job_id, company, title, score in rows:
+    key = (company or "").strip().lower()
+    if key not in best_per_company:
+        best_per_company[key] = (job_id, company, title, score)
+
+recommendations = sorted(best_per_company.values(), key=lambda r: r[3], reverse=True)
+
 with open("reports/today_recommendations.txt", "w") as f:
-    for job_id, company, title, score in rows:
+    for job_id, company, title, score in recommendations:
 
         if score >= 35:
             recommendation = "APPLY"
@@ -30,4 +42,4 @@ with open("reports/today_recommendations.txt", "w") as f:
             f"{job_id}|{company}|{title}|{score}|{recommendation}\n"
         )
 
-print(f"Generated recommendations for {len(rows)} jobs")
+print(f"Generated {len(recommendations)} company-level recommendations (from {len(rows)} NEW jobs)")
