@@ -1,65 +1,180 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Personal ATS</title>
+    <title>Personal ATS - Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; color: #222; }
+        h1 { margin-bottom: 4px; }
+        .subtitle { color: #666; margin-top: 0; margin-bottom: 28px; }
+        section { margin-bottom: 32px; }
+        h2 { border-bottom: 2px solid #ddd; padding-bottom: 6px; }
+        h3 { margin-bottom: 6px; }
+
+        .cards { display: flex; gap: 16px; flex-wrap: wrap; }
+        .card { border: 1px solid #ccc; border-radius: 6px; padding: 10px 20px; min-width: 110px; }
+        .card .label { font-size: 0.85em; color: #666; }
+        .card .value { font-size: 1.6em; font-weight: bold; }
+
+        table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+        th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; font-size: 0.9em; }
+        th { background: #f5f5f5; }
+
+        .tag-apply { color: #1a7a1a; font-weight: bold; }
+        .tag-review { color: #b8860b; font-weight: bold; }
+        .tag-skip { color: #999; }
+
+        .empty { color: #888; font-style: italic; }
+        .pipeline-summary { color: #555; }
+    </style>
 </head>
 <body>
 
 <h1>Personal ATS</h1>
+<p class="subtitle">Dashboard</p>
 
-<h2>Dashboard</h2>
+<section id="overview">
+    <h2>1. ATS Overview</h2>
+    <div class="cards">
+        <div class="card"><div class="label">Total Jobs</div><div class="value">{{ total_jobs }}</div></div>
+        <div class="card"><div class="label">New Jobs</div><div class="value">{{ new_jobs }}</div></div>
+        <div class="card"><div class="label">Applied Jobs</div><div class="value">{{ applied_jobs }}</div></div>
+        <div class="card"><div class="label">Offer Jobs</div><div class="value">{{ offer_jobs }}</div></div>
+    </div>
+</section>
 
-<ul>
-    <li>Total Jobs: {{ total_jobs }}</li>
-    <li>Applied: {{ applied_jobs }}</li>
-    <li>New: {{ new_jobs }}</li>
-    <li>Offers: {{ offer_jobs }}</li>
-</ul>
+<section id="pipeline">
+    <h2>2. Application Pipeline</h2>
+    {% if pipeline.available %}
+        <p class="pipeline-summary">
+            Total: {{ pipeline.summary.get('Total Jobs', '-') }}
+            &nbsp;|&nbsp; New: {{ pipeline.summary.get('New Jobs', '-') }}
+            &nbsp;|&nbsp; Applied: {{ pipeline.summary.get('Applied Jobs', '-') }}
+            &nbsp;|&nbsp; Success Rate: {{ pipeline.summary.get('Success Rate', '-') }}
+        </p>
+        <table>
+            <tr><th>Status</th><th>Count</th></tr>
+            {% for row in pipeline.breakdown %}
+            <tr><td>{{ row.status }}</td><td>{{ row.count }}</td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="empty">No application_pipeline.txt report found yet. Run scripts/application_pipeline_report.py.</p>
+    {% endif %}
+</section>
 
-<form method="GET">
+<section id="top-opportunities">
+    <h2>3. Top Opportunities</h2>
+    {% if recommendations %}
+        <table>
+            <tr><th>ID</th><th>Company</th><th>Title</th><th>Score</th><th>Recommendation</th></tr>
+            {% for r in recommendations %}
+            <tr>
+                <td><a href="/job/{{ r.id }}">{{ r.id }}</a></td>
+                <td>{{ r.company }}</td>
+                <td>{{ r.title }}</td>
+                <td>{{ r.score }}</td>
+                <td class="tag-{{ r.recommendation|lower }}">{{ r.recommendation }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="empty">No today_recommendations.txt report found yet. Run scripts/recommend_jobs.py.</p>
+    {% endif %}
+</section>
 
-    <input
-        type="text"
-        name="search"
-        placeholder="Search jobs..."
-        value="{{ search }}"
-    >
+<section id="apply-queue">
+    <h2>4. Today's Apply Queue</h2>
+    {% if apply_queue %}
+        <table>
+            <tr><th>ID</th><th>Title</th><th>Company</th><th>Score</th></tr>
+            {% for j in apply_queue %}
+            <tr>
+                <td><a href="/job/{{ j.id }}">{{ j.id }}</a></td>
+                <td>{{ j.title }}</td>
+                <td>{{ j.company }}</td>
+                <td>{{ j.score }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="empty">No today_apply_queue.txt report found yet. Run scripts/generate_apply_queue.py.</p>
+    {% endif %}
+</section>
 
-    <select name="status">
-        <option value="">All</option>
-        <option value="NEW">NEW</option>
-        <option value="APPLIED">APPLIED</option>
-        <option value="OFFER">OFFER</option>
-        <option value="REJECTED">REJECTED</option>
-    </select>
+<section id="company-insights">
+    <h2>5. Company Insights</h2>
+    {% if companies.available %}
+        <h3>Top Companies by Job Count</h3>
+        {% if companies.by_volume %}
+            <table>
+                <tr><th>Company</th><th>Jobs</th></tr>
+                {% for c in companies.by_volume %}
+                <tr><td>{{ c.company }}</td><td>{{ c.count }}</td></tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="empty">No companies tracked yet.</p>
+        {% endif %}
 
-    <button type="submit">Search</button>
+        <h3>{{ companies.targets_heading if companies.targets_heading else "Top Target Companies" }}</h3>
+        {% if companies.top_targets %}
+            <table>
+                <tr><th>Company</th><th>Detail</th></tr>
+                {% for t in companies.top_targets %}
+                <tr><td>{{ t.company }}</td><td>{{ t.detail }}</td></tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="empty">No company meets the minimum job threshold yet.</p>
+        {% endif %}
+    {% else %}
+        <p class="empty">No top_companies.txt report found yet. Run scripts/top_companies_report.py.</p>
+    {% endif %}
+</section>
 
-</form>
+<section id="job-search">
+    <h2>Jobs</h2>
 
-<h2>Jobs</h2>
+    <form method="GET">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search jobs..."
+            value="{{ search }}"
+        >
 
-<table border="1">
+        <select name="status">
+            <option value="">All</option>
+            <option value="NEW">NEW</option>
+            <option value="APPLIED">APPLIED</option>
+            <option value="OFFER">OFFER</option>
+            <option value="REJECTED">REJECTED</option>
+        </select>
 
-<tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Company</th>
-    <th>Location</th>
-    <th>Status</th>
-</tr>
+        <button type="submit">Search</button>
+    </form>
 
-{% for job in jobs %}
-<tr>
-    <td>{{ job[0] }}</td>
-    <td><a href="/job/{{ job[0] }}">{{ job[1] }}</a></td>
-    <td>{{ job[2] }}</td>
-    <td>{{ job[3] }}</td>
-    <td>{{ job[4] }}</td>
-</tr>
-{% endfor %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+        {% for job in jobs %}
+        <tr>
+            <td>{{ job[0] }}</td>
+            <td><a href="/job/{{ job[0] }}">{{ job[1] }}</a></td>
+            <td>{{ job[2] }}</td>
+            <td>{{ job[3] }}</td>
+            <td>{{ job[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-</table>
+    <p><a href="/add_job">+ Add Job</a></p>
+</section>
 
 </body>
 </html>
