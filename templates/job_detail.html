@@ -9,6 +9,9 @@
 
 <p><strong>Location:</strong> {{ job.location }}</p>
 <p><strong>Status:</strong> {{ job.status }}</p>
+{% if job.expired_at %}
+<p><strong>Expired At:</strong> {{ job.expired_at }}</p>
+{% endif %}
 <p><strong>Source:</strong> {{ job.source }}</p>
 <p><strong>URL:</strong>
 {% if job.job_url %}
@@ -35,6 +38,12 @@ N/A
 </select>
 <button type="submit">Update Status</button>
 </form><br>
+
+{% if job.status != 'EXPIRED' %}
+<form method="post" action="/mark_expired/{{ job.id }}" onsubmit="return confirm('Mark this job as expired? Use this when you know the listing is gone, even if the automated check hasn\'t caught it yet.');">
+<button type="submit" style="color:#777;">Mark as Expired</button>
+</form><br>
+{% endif %}
 
 <form method="post" action="/delete/{{ job.id }}" onsubmit="return confirm('Are you sure you want to delete this job?' );">
 <button type="submit" style="color:red;">Delete Job</button>

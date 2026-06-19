@@ -23,6 +23,18 @@
         .tag-review { color: #b8860b; font-weight: bold; }
         .tag-skip { color: #999; }
 
+        .status-badge { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 0.8em; font-weight: bold; }
+        .status-NEW { background: #e8f0fe; color: #1a56c4; }
+        .status-APPLIED { background: #fff4e0; color: #a8650f; }
+        .status-HR_ROUND, .status-TECHNICAL, .status-FINAL { background: #fdf0ff; color: #8a2bb5; }
+        .status-OFFER { background: #e6f7e6; color: #1a7a1a; }
+        .status-REJECTED { background: #fdeaea; color: #b71c1c; }
+        .status-EXPIRED { background: #eee; color: #777; }
+
+        .view-filter { margin-bottom: 12px; }
+        .view-filter a { margin-right: 14px; text-decoration: none; color: #555; }
+        .view-filter a.active-view { font-weight: bold; color: #1a56c4; text-decoration: underline; }
+
         .empty { color: #888; font-style: italic; }
         .pipeline-summary { color: #555; }
     </style>
@@ -135,7 +147,15 @@
 <section id="job-search">
     <h2>Jobs</h2>
 
+    <p class="view-filter">
+        <strong>View:</strong>
+        <a href="/?view=active{% if search %}&search={{ search }}{% endif %}" class="{% if view == 'active' %}active-view{% endif %}">Active Jobs</a>
+        <a href="/?view=applications{% if search %}&search={{ search }}{% endif %}" class="{% if view == 'applications' %}active-view{% endif %}">Applications</a>
+        <a href="/?view=all{% if search %}&search={{ search }}{% endif %}" class="{% if view == 'all' %}active-view{% endif %}">All Jobs</a>
+    </p>
+
     <form method="GET">
+        <input type="hidden" name="view" value="{{ view }}">
         <input
             type="text"
             name="search"
@@ -144,11 +164,15 @@
         >
 
         <select name="status">
-            <option value="">All</option>
-            <option value="NEW">NEW</option>
-            <option value="APPLIED">APPLIED</option>
-            <option value="OFFER">OFFER</option>
-            <option value="REJECTED">REJECTED</option>
+            <option value="" {% if status == '' %}selected{% endif %}>All Statuses</option>
+            <option value="NEW" {% if status == 'NEW' %}selected{% endif %}>NEW</option>
+            <option value="APPLIED" {% if status == 'APPLIED' %}selected{% endif %}>APPLIED</option>
+            <option value="HR_ROUND" {% if status == 'HR_ROUND' %}selected{% endif %}>HR_ROUND</option>
+            <option value="TECHNICAL" {% if status == 'TECHNICAL' %}selected{% endif %}>TECHNICAL</option>
+            <option value="FINAL" {% if status == 'FINAL' %}selected{% endif %}>FINAL</option>
+            <option value="OFFER" {% if status == 'OFFER' %}selected{% endif %}>OFFER</option>
+            <option value="REJECTED" {% if status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+            <option value="EXPIRED" {% if status == 'EXPIRED' %}selected{% endif %}>EXPIRED</option>
         </select>
 
         <button type="submit">Search</button>
@@ -168,7 +192,7 @@
             <td><a href="/job/{{ job[0] }}">{{ job[1] }}</a></td>
             <td>{{ job[2] }}</td>
             <td>{{ job[3] }}</td>
-            <td>{{ job[4] }}</td>
+            <td><span class="status-badge status-{{ job[4] }}">{{ job[4] }}</span></td>
         </tr>
         {% endfor %}
     </table>
