@@ -5,4 +5,4 @@ display which release it's running) so the version string only has to
 be updated in one place per release.
 """
 
-ATS_VERSION = "1.4.0"
+ATS_VERSION = "1.5.1"

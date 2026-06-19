@@ -7,6 +7,7 @@ if [ -f "$FILE" ]; then
     python3 scripts/import_jobs_json.py "$FILE"
 fi
 
+python3 scripts/validate_job_urls.py
 python3 scripts/score_jobs.py
 python3 scripts/skills_gap_report.py
 python3 scripts/recommend_jobs.py
