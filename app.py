@@ -1,8 +1,16 @@
 import os
+from datetime import datetime
 from flask import Flask, render_template, request, redirect
 from db_utils import fetch_one, fetch_all, execute_query
 
 app = Flask(__name__)
+
+# Status grouping for the dashboard's View Filter (Active Jobs /
+# Applications / All Jobs). Mirrors scripts/dashboard.py's
+# SUBMITTED_STATUSES - keep in sync if the status enum ever changes.
+ACTIVE_STATUSES = ["NEW"]
+APPLICATION_STATUSES = ["APPLIED", "HR_ROUND", "TECHNICAL", "FINAL", "OFFER", "REJECTED"]
+VIEW_FILTERS = {"active", "applications", "all"}
 
 # Reports directory written by the existing v1.4 report scripts
 # (scripts/application_pipeline_report.py, recommend_jobs.py,
@@ -117,23 +125,47 @@ def home():
 
     search = request.args.get("search", "")
     status = request.args.get("status", "")
+    view = request.args.get("view", "")
+    if view not in VIEW_FILTERS:
+        # Default dashboard view: active jobs only (Requirement 1).
+        view = "active"
 
-    # Job list + overview counts: same queries as before, just run through
-    # db_utils (already used by every other route in this file) instead of
-    # a raw sqlite3 connection.
+    # Job list + overview counts: same base queries as before, now with
+    # a status WHERE clause actually applied (this was previously read
+    # from the query string but never used - see Priority 6).
+    #
+    # A specific `status` selection (from the granular Status Filter
+    # dropdown) takes precedence over the broader `view` tab, since
+    # it's the more specific filter. With no status selected, the view
+    # tab determines which statuses are shown.
+    conditions = []
+    params = []
+
     if search:
-        jobs = fetch_all("""
-        SELECT id,title,company,location,status
-        FROM jobs
-        WHERE title LIKE ? OR company LIKE ?
-        ORDER BY score DESC, id DESC
-        """, (f"%{search}%", f"%{search}%"))
-    else:
-        jobs = fetch_all("""
-        SELECT id,title,company,location,status
-        FROM jobs
-        ORDER BY score DESC, id DESC
-        """)
+        conditions.append("(title LIKE ? OR company LIKE ?)")
+        params += [f"%{search}%", f"%{search}%"]
+
+    if status:
+        conditions.append("status = ?")
+        params.append(status)
+    elif view == "active":
+        placeholders = ",".join("?" * len(ACTIVE_STATUSES))
+        conditions.append(f"status IN ({placeholders})")
+        params += ACTIVE_STATUSES
+    elif view == "applications":
+        placeholders = ",".join("?" * len(APPLICATION_STATUSES))
+        conditions.append(f"status IN ({placeholders})")
+        params += APPLICATION_STATUSES
+    # view == "all": no status condition - every job, including EXPIRED.
+
+    where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+
+    jobs = fetch_all(f"""
+    SELECT id,title,company,location,status
+    FROM jobs
+    {where_clause}
+    ORDER BY score DESC, id DESC
+    """, tuple(params))
 
     total_jobs = fetch_one("SELECT COUNT(*) FROM jobs")[0]
     applied_jobs = fetch_one("SELECT COUNT(*) FROM jobs WHERE UPPER(status)='APPLIED'")[0]
@@ -164,6 +196,8 @@ def home():
         new_jobs=new_jobs,
         offer_jobs=offer_jobs,
         search=search,
+        status=status,
+        view=view,
         pipeline=pipeline,
         recommendations=recommendations,
         apply_queue=apply_queue,
@@ -211,7 +245,30 @@ def edit_job(job_id):
 @app.route("/update_status/<int:job_id>", methods=["POST"])
 def update_status(job_id):
     new_status = request.form["status"]
-    execute_query("UPDATE jobs SET status = ? WHERE id = ?", (new_status, job_id))
+    if new_status == "EXPIRED":
+        execute_query(
+            "UPDATE jobs SET status=?, expired_at=? WHERE id=?",
+            (new_status, datetime.now().isoformat(timespec="seconds"), job_id),
+        )
+    else:
+        # Clear expired_at if a job is being moved off EXPIRED (e.g. a
+        # manual correction). No-op for jobs that were never expired.
+        execute_query(
+            "UPDATE jobs SET status=?, expired_at=NULL WHERE id=?",
+            (new_status, job_id),
+        )
+    return redirect(f"/job/{job_id}")
+
+
+@app.route("/mark_expired/<int:job_id>", methods=["POST"])
+def mark_expired(job_id):
+    """Manual 'Mark as Expired' action on the Job Detail page - a
+    one-click shortcut for the same EXPIRED transition update_status
+    handles, for jobs the automated validator hasn't caught yet."""
+    execute_query(
+        "UPDATE jobs SET status='EXPIRED', expired_at=? WHERE id=?",
+        (datetime.now().isoformat(timespec="seconds"), job_id),
+    )
     return redirect(f"/job/{job_id}")
 
 @app.route("/delete/<int:job_id>", methods=["POST"])
