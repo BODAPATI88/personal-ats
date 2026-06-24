@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Personal ATS - Dashboard</title>
+    <title>BVR Group ATS - Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 24px; color: #222; }
         h1 { margin-bottom: 4px; }
@@ -41,16 +41,17 @@
 </head>
 <body>
 
-<h1>Personal ATS</h1>
+<h1>BVR Group ATS</h1>
 <p class="subtitle">Dashboard</p>
 
 <section id="overview">
     <h2>1. ATS Overview</h2>
     <div class="cards">
-        <div class="card"><div class="label">Total Jobs</div><div class="value">{{ total_jobs }}</div></div>
-        <div class="card"><div class="label">New Jobs</div><div class="value">{{ new_jobs }}</div></div>
-        <div class="card"><div class="label">Applied Jobs</div><div class="value">{{ applied_jobs }}</div></div>
-        <div class="card"><div class="label">Offer Jobs</div><div class="value">{{ offer_jobs }}</div></div>
+        <div class="card"><div class="label">ACTIVE Jobs</div><div class="value">{{ active_jobs }}</div></div>
+        <div class="card"><div class="label">SUSPECT Jobs</div><div class="value">{{ suspect_jobs }}</div></div>
+        <div class="card"><div class="label">UNVALIDATED Jobs</div><div class="value">{{ unvalidated_jobs }}</div></div>
+        <div class="card"><div class="label">EXPIRED Jobs</div><div class="value">{{ expired_jobs }}</div></div>
+        <div class="card"><div class="label">Quality Score</div><div class="value">{{ quality_score }}%</div></div>
     </div>
 </section>
 
