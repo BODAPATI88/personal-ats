@@ -8,6 +8,7 @@ cursor.execute("""
 SELECT id,title,company,score
 FROM jobs
 WHERE status='NEW'
+AND validation_status='ACTIVE'
 ORDER BY score DESC,id DESC
 LIMIT 25
 """)

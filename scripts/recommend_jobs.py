@@ -10,6 +10,7 @@ cursor.execute("""
 SELECT id, company, title, score
 FROM jobs
 WHERE status='NEW'
+AND validation_status='ACTIVE'
 ORDER BY company, score DESC, id DESC
 """)
 
