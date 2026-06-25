@@ -172,6 +172,32 @@ def home():
     new_jobs = fetch_one("SELECT COUNT(*) FROM jobs WHERE UPPER(status)='NEW'")[0]
     offer_jobs = fetch_one("SELECT COUNT(*) FROM jobs WHERE UPPER(status)='OFFER'")[0]
 
+    active_jobs = fetch_one(
+        "SELECT COUNT(*) FROM jobs WHERE validation_status='ACTIVE'"
+    )[0]
+
+    suspect_jobs = fetch_one(
+        "SELECT COUNT(*) FROM jobs WHERE validation_status='SUSPECT'"
+    )[0]
+
+    unvalidated_jobs = fetch_one(
+        "SELECT COUNT(*) FROM jobs WHERE status='NEW' AND validation_status IS NULL"
+    )[0]
+
+    expired_jobs = fetch_one(
+        "SELECT COUNT(*) FROM jobs WHERE validation_status='EXPIRED'"
+    )[0]
+
+    quality_score = fetch_one("""
+SELECT ROUND(
+100.0 *
+SUM(CASE WHEN validation_status='ACTIVE' THEN 1 ELSE 0 END)
+/
+SUM(CASE WHEN status='NEW' THEN 1 ELSE 0 END)
+,2)
+FROM jobs
+""")[0]
+
     # Dashboard sections 2-5: read-only parsing of existing v1.4 report
     # files under reports/. No scoring, recommendation, or report
     # generation logic lives here - this route never writes to reports/.
@@ -195,6 +221,11 @@ def home():
         applied_jobs=applied_jobs,
         new_jobs=new_jobs,
         offer_jobs=offer_jobs,
+        active_jobs=active_jobs,
+        suspect_jobs=suspect_jobs,
+        unvalidated_jobs=unvalidated_jobs,
+        expired_jobs=expired_jobs,
+        quality_score=quality_score,
         search=search,
         status=status,
         view=view,

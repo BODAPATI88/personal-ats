@@ -5,6 +5,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from db_utils import execute_query, fetch_one
+from utils.url_sanitizer import sanitize
 
 json_file = Path(
     sys.argv[1]
@@ -19,6 +20,7 @@ skipped = 0
 
 for job in jobs:
     job_url = job.get("job_url")
+    job_url = sanitize(job_url)
     company = job.get("company")
 
     existing_company = fetch_one(
@@ -69,7 +71,7 @@ for job in jobs:
             job.get("company"),
             job.get("location"),
             job.get("source"),
-            job.get("job_url"),
+            job_url,
             0,
             job.get("status", "NEW"),
             skills_value
